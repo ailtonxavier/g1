@@ -12,12 +12,14 @@ while 1 != 2:
         # adicionando o link das paginas na lista de links
         links.append(link.get('href'))
 
-    aux = 0
     for link in links:
-        request2 = requests.get(links[aux]).content
+        request2 = requests.get(links[links.index(link)]).content
         soup2 = BeautifulSoup(request2, 'html.parser')
         titulo = soup2.find('h1', attrs={'class':'content-head__title'})
-        if titulo != None: print(titulo.text)
-        aux += 1
+        if titulo != None: 
+            print(titulo.text)
+            titulos.append(titulo.text)
+    
+    print(titulos)
     print()
     sleep(3)
