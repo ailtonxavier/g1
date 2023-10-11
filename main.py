@@ -1,28 +1,23 @@
 import requests
 from bs4 import BeautifulSoup
-import time
+from time import sleep
 
-
-i = 0
-while i != 1:
-    response = requests.get("https://g1.globo.com")
-
-    content = response.content
-
-    site = BeautifulSoup(content, "html.parser")
-
-    noticias = site.find_all('div', attrs={'class':'feed-post-body'})
+while 1 != 2:
+    request = requests.get("https://g1.globo.com").content
+    soup = BeautifulSoup(request, 'html.parser')
     links = []
-    conteudo_bd = []
-    for noticia in noticias:
-        titulo = (noticia.find('a', attrs={'class':'feed-post-link'}))
-        links += [titulo.get('href')]
-        
-    for link in links:
-        request_lista = requests.get(link).text
-        titulo_sub_link = (request_lista.find('a', attrs={'class':'feed-post-link'}))
-        
-        conteudo_bd.append(request_lista)
+    titulos = []
 
-    print(conteudo_bd)
-    time.sleep(5)
+    for link in soup.find_all('a', attrs={'class':'feed-post-link'}):
+        # adicionando o link das paginas na lista de links
+        links.append(link.get('href'))
+
+    aux = 0
+    for link in links:
+        request2 = requests.get(links[aux]).content
+        soup2 = BeautifulSoup(request2, 'html.parser')
+        titulo = soup2.find('h1', attrs={'class':'content-head__title'})
+        if titulo != None: print(titulo.text)
+        aux += 1
+    print()
+    sleep(3)
