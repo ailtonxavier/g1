@@ -10,7 +10,7 @@ while 1 != 2:
 
     for link in soup.find_all('a', attrs={'class':'feed-post-link'}):
         # adicionando o link das paginas na lista de links
-        links.append(link.get('href'))
+        if link.get('href') != None: links.append(link.get('href'))
 
     for link in links:
         request2 = requests.get(links[links.index(link)]).content
