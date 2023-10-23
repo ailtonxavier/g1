@@ -4,42 +4,18 @@ from datahora import data, hora
 from time import sleep
 from conecction import *
 from auth import *
+import links
 
-def g1():
-    return BeautifulSoup(requests.get("https://g1.globo.com").content, 'html.parser')
-
-def encontra_links(g1):
-    links = []
-    for link in g1.find_all('a', attrs={'class':'feed-post-link'}):
-        if link.get('href') != None: 
-            links.append(link.get('href'))
-    return links
-
-def listagem_de_titulos(links):
-    titulos = []
-    for link in links:
-        titulo = (BeautifulSoup(requests.get(links[links.index(link)]).content, 'html.parser')).find('h1', attrs={'class':'content-head__title'})
-        if titulo != None: 
-            titulos.append(titulo.text)
-    return titulos
-
-
-criar_sqlite3()
+criar_sqlite3() # se não existir criar, caso contrário 
 
 while 1 != 2:
 
-    # links = encontra_links(g1())
+    lista_de_links = links.encontra_links(links.g1())
 
-    # titulos = listagem_de_titulos(links)
+    titulos = links.listagem_de_titulos(lista_de_links)
 
-
-    # links = encontra_links(g1())
-
-    # titulos = listagem_de_titulos(links)
-
-    # titulo = ", ".join(titulos)
-
-    titulo = ''
+    titulo = ", ".join(titulos)
+    print(titulo)
     inserir_sqlite3(titulo, hora(), data())
     listar_sqlite3()
     sleep(5)
