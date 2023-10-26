@@ -1,13 +1,13 @@
-FROM python:latest
+FROM python
 
 ENV PYTHONONBUFFERED 1
 
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
+COPY . .
 
-RUN sudo pip install -r requirements.txt
+RUN pip install -r requirements.txt
 
 VOLUME . .
 
-CMD ["python","main.py"]
+CMD ["python", "main.py"]
