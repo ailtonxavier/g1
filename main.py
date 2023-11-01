@@ -1,6 +1,6 @@
 from time import sleep
 import links
-import database
+import db_redis
 
 i = 0
 while 1 != 2:
@@ -11,6 +11,6 @@ while 1 != 2:
 
     titulo = ",".join(titulos)
 
-    database.update(titulo)
-    database.read()
+    db_redis.update(titulo)
+    print(db_redis.read())
     sleep(5)
